@@ -24,6 +24,7 @@
                             <th>Gender</th>
                             <th>Tanggal Lahir</th>
                             <th>Alamat</th>
+                            <th>Kelas</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -36,6 +37,7 @@
                             <th>Gender</th>
                             <th>Tanggal Lahir</th>
                             <th>Alamat</th>
+                            <th>Kelas</th>
                             <th>Action</th>
                         </tr>
                     </tfoot>
@@ -49,6 +51,7 @@
                                 <td>{{ $siswa->gender }}</td>
                                 <td>{{ $siswa->tgl_lahir }}</td>
                                 <td>{{ $siswa->alamat }}</td>
+                                <td>{{ $siswa->nm_kelas }}</td>
                                 <td>
 
                                     <form action ="{{ route('siswa.destroy', $siswa->id) }}" method="POST">

@@ -13,8 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tbl', function (Blueprint $table) {
-            $table->id();
+        Schema::create('tbl_siswa', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('absensi');
+            $table->string('tugas');
+            $table->string('uts');
+            $table->date('uas');
+            $table->text('total');
+            $table->text('grade');
+            $table->text('id_siswa');
             $table->timestamps();
         });
     }
@@ -26,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl');
+        //
     }
 };

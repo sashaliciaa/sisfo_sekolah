@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Siswa;
+use App\Models\Tbl_Kelas;
 use Illuminate\Http\Request;
 use Illuminate\Support\facades\File;
 use Illuminate\Support\facades\Storage;
+use Illuminate\Support\facades\DB;
 
 class SiswaController extends Controller
 {
@@ -16,8 +18,10 @@ class SiswaController extends Controller
      */
     public function index()
     {
-        $siswas = Siswa::latest()->paginate(20);
-        return view('siswa.index', compact('siswas'))->with('i', (request()->input('page', 1) - 1) * 20);
+        $siswas = DB::table('tbl_siswa')
+            ->join('tbl_kelas', 'tbl_kelas.id', '=', 'tbl_siswa.id_kelas')
+            ->get();
+        return view('siswa.index', compact('siswas'))->with('i');
     }
 
     /**
@@ -27,8 +31,8 @@ class SiswaController extends Controller
      */
     public function create()
     {
-
-        return view('siswa.create');
+        $kelass = Tbl_Kelas::all();
+        return view('siswa.create', compact('kelass'));
     }
 
     /**
@@ -37,7 +41,7 @@ class SiswaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Tbl_Kelas $kelas)
     {
         $this->validate($request, [
             'nis' => 'required',
@@ -45,6 +49,7 @@ class SiswaController extends Controller
             'gender' => 'required',
             'tgl_lahir' => 'required',
             'alamat' => 'required',
+            'id_kelas' => 'required',
             'gambar' => 'required',
         ]);
 
@@ -59,6 +64,7 @@ class SiswaController extends Controller
             'gender' => $request->gender,
             'tgl_lahir' => $request->tgl_lahir,
             'alamat' => $request->alamat,
+            'id_kelas' => $request->id_kelas,
             'gambar' => $nama_file,
         ]);
         return redirect()->route('siswa.index')
@@ -93,13 +99,14 @@ class SiswaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Siswa $siswa)
+    public function update(Request $request, Siswa $siswa, Tbl_Kelas $kelas)
     {
         $request->validate([
             'nis' => 'required',
             'nm_siswa' => 'required',
             'gender' => 'required',
             'tgl_lahir' => 'required',
+            'kelas' => 'required',
             'alamat' => 'required',
         ]);
 
@@ -116,6 +123,7 @@ class SiswaController extends Controller
                 'gender' => $request->gender,
                 'tgl_lahir' => $request->tgl_lahir,
                 'alamat' => $request->alamat,
+                'kelas' => $request->kelas,
                 'gambar' => $nama_file,
             ]);
         } else {

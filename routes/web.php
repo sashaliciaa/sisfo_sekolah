@@ -23,7 +23,8 @@ Route::get('/welcome', function () {
 
 Route::resource('siswa', App\Http\Controllers\SiswaController::class);
 Route::resource('guru', App\Http\Controllers\GuruController::class);
-Route::resource('mapel', App\Http\Controllers\MapelController::class);  
+Route::resource('mapel', App\Http\Controllers\MapelController::class);
+Route::resource('nilai', App\Http\Controllers\NilaiController::class);
 Route::get('/login', [App\Http\Controllers\UserController::class, 'index'])->name('login')->middleware('guest');
 Route::post('/login', [App\Http\Controllers\UserController::class, 'authenticate']);
 Route::get('/logout', [App\Http\Controllers\UserController::class, 'logout']);

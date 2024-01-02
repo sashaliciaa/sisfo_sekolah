@@ -77,6 +77,16 @@
                         </div>
 
                         <div class="form-group">
+                            <Label>Kelas Siswa :</Label>
+                            <select name="id_kelas" class="form-control">
+                                <option>~Pilih Kelas Siswa~</option>
+                                @foreach ($kelass as $kelas)
+                                    <option value="{{ $kelas->id }}">{{ $kelas->nm_kelas }} </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="form-group">
                             <Label>Foto Siswa :</Label>
                             <input type="file" class="form-control" name="gambar">
                         </div>
